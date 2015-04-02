@@ -8,7 +8,7 @@ function getLastCorrectEpochDate(){
     
     var result = Math.floor(trueDate / 1000);
     
-    return result - result%300 - (300*1);
+    return result - result%300 - (300*2);
 }
 
 function getLastDatas(){
@@ -36,6 +36,8 @@ function getLastDatas(){
         });
     });
 }
+
+getLastDatas();
 
 var minutes = 5, interval = minutes * 60 * 1000;
 setInterval(function(){
