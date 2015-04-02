@@ -78,8 +78,19 @@ var getPlayersWithStatFalse = function (participants, booleanStatField){
     return resultArray;
 }
 
+var getAverageForStat = function(participants, statField){
+    var res = -1;
+    
+    for (var i = 0; i < participants.length; i++) {
+        res += participants[i].stats[statField];
+    }
+    
+    return res / participants.length;
+}
+
 module.exports = PlayerCheck;
 module.exports.getBestPlayersForStat = getBestPlayersForStat;
 module.exports.getWorstPlayersForStat = getWorstPlayersForStat;
 module.exports.getPlayersWithStatTrue = getPlayersWithStatTrue;
 module.exports.getPlayersWithStatFalse = getPlayersWithStatFalse;
+module.exports.getAverageForStat = getAverageForStat;

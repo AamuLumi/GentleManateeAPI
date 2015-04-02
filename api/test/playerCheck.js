@@ -30,4 +30,10 @@ describe('Player Check', function () {
         expect(players[0].participantId).to.not.equal(-1);
         expect(players.length).to.equal(9);
     });
+    
+    it('must find the average kills', function(){
+        var averageKills = PlayerCheck.getAverageForStat(data.participants, "kills");
+        expect(averageKills).to.not.equal(-1);
+    });
+    
 });
