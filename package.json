@@ -1,6 +1,6 @@
 {
     "name" : "Patatoid",
-    "version" : "0.1",
+    "version" : "0.1.0",
     "description" : "A funny patatoid",
     "author" : "Florian Kauder <flokauder@hotmail.com>",
     "scripts" : {
