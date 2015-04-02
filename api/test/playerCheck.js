@@ -20,4 +20,10 @@ describe('Player Check', function () {
         expect(worsts[0].score).to.not.equal(-1);
         console.log(worsts);
     });
+    
+    it('must find the participant which get the first blood kill', function(){
+        var players = PlayerCheck.getPlayersWithStatTrue(data.participants, "firstBloodKill");
+        expect(players[0].participantId).to.not.equal(-1);
+        console.log(players);
+    });
 });
