@@ -4,7 +4,7 @@
     "description" : "A funny patatoid",
     "author" : "Florian Kauder <flokauder@hotmail.com>",
     "scripts" : {
-        "test" : "mocha",
+        "test" : "mocha"
     },
     "dependencies" : {
         "express" : "^4.12.2",
