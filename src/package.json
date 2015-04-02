@@ -1,0 +1,19 @@
+{
+    "name" : "Patatoid",
+    "version" : "0.1",
+    "description" : "A funny patatoid",
+    "author" : "Florian Kauder <flokauder@hotmail.com>",
+    "scripts" : {
+        "test" : "mocha",
+    },
+    "dependencies" : {
+        "express" : "^4.12.2",
+        "mongoose" : "^4.0.0",
+        "gith" : "^1.0.4"
+    },
+    "devDependencies" : {
+        "mocha" : "^2.2.1",
+        "chai" : "^2.2.0"
+    },
+    "license" : "MIT"
+}
