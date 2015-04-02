@@ -64,7 +64,22 @@ var getPlayersWithStatTrue = function (participants, booleanStatField){
     return resultArray;
 }
 
+var getPlayersWithStatFalse = function (participants, booleanStatField){
+    var resultArray = [];
+
+    for (var i = 0; i < participants.length; i++) {
+        if (!participants[i].stats[booleanStatField]) {
+            resultArray.push({
+                participantId: participants[i].participantId
+            }); 
+        }
+    }
+
+    return resultArray;
+}
+
 module.exports = PlayerCheck;
 module.exports.getBestPlayersForStat = getBestPlayersForStat;
 module.exports.getWorstPlayersForStat = getWorstPlayersForStat;
 module.exports.getPlayersWithStatTrue = getPlayersWithStatTrue;
+module.exports.getPlayersWithStatFalse = getPlayersWithStatFalse;
