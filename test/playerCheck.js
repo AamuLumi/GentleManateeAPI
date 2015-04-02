@@ -14,10 +14,10 @@ describe('Player Check', function () {
         console.log(bests);
     });
 
-    /*it('must find the worst killer', function () {
-        var worst = PlayerCheck.getWorstPlayerForStat(data.participants, "kills");
-        expect(worst.participantId).to.not.equal(-1);
-        expect(worst.score).to.not.equal(-1);
-        console.log(worst);
-    });*/
+    it('must find the worst killer', function () {
+        var worsts = PlayerCheck.getWorstPlayersForStat(data.participants, "kills");
+        expect(worsts[0].participantId).to.not.equal(-1);
+        expect(worsts[0].score).to.not.equal(-1);
+        console.log(worsts);
+    });
 });
