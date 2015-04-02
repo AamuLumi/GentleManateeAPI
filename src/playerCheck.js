@@ -43,7 +43,7 @@ var getWorstPlayersForStat = function (participants, statField) {
             worstArray.push({
                 participantId: participants[i].participantId,
                 score: participants[i].stats[statField]
-            });
+            }); 
         }
     }
 
