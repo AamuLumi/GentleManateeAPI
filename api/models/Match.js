@@ -6,7 +6,7 @@ var MatchSchema = new Schema({
     
     cumulatedDuration : {type : Number, default : 0},
     maxDuration : {type : Number, default : 0},
-    minDuration : {type : Number, default : 180},
+    minDuration : {type : Number, default : 6000000},
     
     played : {type : Number, default : 0},
 });
