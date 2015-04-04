@@ -19,6 +19,7 @@ function dataAnalyze(data) {
     fillChampionWithData(data);
     fillChampionItemWithData(data);
     fillChampionLaneWithData(data);
+    fillChampionPlayerRankWithData(data);
 };
 
 module.exports = dataAnalyze;
@@ -267,7 +268,6 @@ function fillChampionLaneWithData(data) {
                                 participant.championId,
                                 getLaneIdForString(participant.timeline.lane));
                         championLane.save(function (err) {
-                            console.log(championLane);
                             if (err) console.error(err);
                         });
                     }
@@ -292,19 +292,83 @@ function createOrFilledChampionLane(cl, championId, laneId) {
 }
 
 function getLaneIdForString(lane) {
-    console.log(lane);
     if ((lane == "MID") || (lane == "MIDDLE"))
         return ChampionLane.Mid;
     else if ((lane == "BOT") || (lane == "BOTTOM"))
         return ChampionLane.Bot;
     else if (lane == "TOP")
         return ChampionLane.Top;
-    else
+    else if (lane == "JUNGLE")
         return ChampionLane.Jungle;
+    else 
+        return undefined;
 }
 
 function fillChampionPlayerRankWithData(data) {
+    async.each(data.participants,
+        function (participant, callback) {
+            ChampionPlayerRank.findOne({
+                    championId: participant.championId,
+                    playerRankId: getPlayerRankIdForString(
+                        participant.highestAchievedSeasonTier)
+                },
+                function useResult(err, championPlayerRank) {
+                    if (err) console.error(err);
+                    else {
+                        if (championPlayerRank == undefined)
+                            championPlayerRank = createOrFilledChampionPlayerRank(null,
+                                participant.championId,
+                                getPlayerRankIdForString(
+                                    participant.highestAchievedSeasonTier));
+                        else
+                            championPlayerRank = createOrFilledChampionPlayerRank(
+                                championPlayerRank,
+                                participant.championId,
+                                getPlayerRankIdForString(
+                                    participant.highestAchievedSeasonTier));
+                        championPlayerRank.save(function (err) {
+                            if (err) console.error(err);
+                        });
+                    }
+                    callback()
+                });;
+        },
+        function (err) {
+            if (err) console.error(err);
+        });
+}
 
+function createOrFilledChampionPlayerRank(cpr, championId, playerRankId) {
+    if (cpr == null) {
+        cpr = new ChampionPlayerRank();
+        cpr.championId = championId;
+        cpr.playerRankId = playerRankId;
+    }
+
+    cpr.value++;
+
+    return cpr;
+}
+
+function getPlayerRankIdForString(pr) {
+    if (pr == "UNRANKED")
+        return ChampionPlayerRank.Unranked;
+    else if (pr == "BRONZE")
+        return ChampionPlayerRank.Bronze;
+    else if (pr == "SILVER")
+        return ChampionPlayerRank.Silver;
+    else if (pr == "GOLD")
+        return ChampionPlayerRank.Gold;
+    else if (pr == "PLATINUM")
+        return ChampionPlayerRank.Platinum;
+    else if (pr == "DIAMOND")
+        return ChampionPlayerRank.Diamond;
+    else if (pr == "MASTER")
+        return ChampionPlayerRank.Master;
+    else if (pr == "CHALLENGER")
+        return ChampionPlayerRank.Challenger;
+    else
+        return undefined;
 }
 
 function fillChampionRoleWithData(data) {
