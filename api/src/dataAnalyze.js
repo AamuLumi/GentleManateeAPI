@@ -14,6 +14,7 @@ var Match = require('../models/Match');
 var Team = require('../models/Team');
 
 var itemFields = ["item0", "item1", "item2", "item3", "item4", "item5", "item6"];
+var spellFields = ["spell1Id", "spell2Id"];
 
 function dataAnalyze(data) {
     fillChampionWithData(data);
@@ -21,6 +22,7 @@ function dataAnalyze(data) {
     fillChampionLaneWithData(data);
     fillChampionPlayerRankWithData(data);
     fillChampionRoleWithData(data);
+    fillChampionSpellWithData(data);
 };
 
 module.exports = dataAnalyze;
@@ -301,7 +303,7 @@ function getLaneIdForString(lane) {
         return ChampionLane.Top;
     else if (lane == "JUNGLE")
         return ChampionLane.Jungle;
-    else 
+    else
         return undefined;
 }
 
@@ -425,12 +427,61 @@ function getRoleIdForString(role) {
         return ChampionRole.DuoCarry;
     else if (role == "DUO_SUPPORT")
         return ChampionRole.DuoSupport;
-    else 
+    else
         return undefined;
 }
 
 function fillChampionSpellWithData(data) {
+    async.each(data.participants,
+        function (participant, callback) {
+            async.each(spellFields,
+                function (spell, callback) {
+                    addOrEditChampionSpell(data, participant, spell, callback);
+                },
+                function (err) {
+                    if (err) console.error(err);
+                });
+        },
+        function (err) {
+            if (err) console.error(err);
+        });
+}
 
+function addOrEditChampionSpell(data, participant, spellField, callback) {
+    ChampionSpell.findOne({
+            championId: participant.championId,
+            spellId: participant[spellField]
+        },
+        function useResult(err, championSpell) {
+            if (err) console.error(err);
+            else {
+                if (championSpell == undefined)
+                    championSpell = createOrFilledChampionSpell(null,
+                        participant.championId,
+                        participant[spellField]);
+                else
+                    championSpell = createOrFilledChampionSpell(championSpell,
+                        participant.championId,
+                        participant[spellField]);
+                championSpell.save(function (err) {
+                    console.log(championSpell);
+                    if (err) console.error(err);
+                });
+            }
+            callback()
+        });
+}
+
+function createOrFilledChampionSpell(cs, championId, spellId) {
+    if (cs == null) {
+        cs = new ChampionSpell();
+        cs.championId = championId;
+        cs.spellId = spellId;
+    }
+
+    cs.value++;
+
+    return cs;
 }
 
 function fillMatchWithData(data) {
