@@ -7,6 +7,9 @@ var ChampionSchema = new Schema({
     played : {type : Number, default : 0},
     wins : {type : Number, default : 0},
     
+    cumulatedMaxLevel : {type : Number, default : 0},
+    maxLevel : {type : Number, default : 0},
+    
     cumulatedKills : {type : Number, default : 0},
     maxKills : {type : Number, default : 0},
     cumulatedAssists : {type : Number, default : 0},
