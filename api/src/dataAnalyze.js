@@ -1,5 +1,6 @@
 var async = require('async');
 var calls = [];
+
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost:27017/patatoid');
 
@@ -12,14 +13,17 @@ var ChampionSpell = require('../models/ChampionSpell');
 var Match = require('../models/Match');
 var Team = require('../models/Team');
 
+var itemFields = ["item0", "item1", "item2", "item3", "item4", "item5", "item6"];
+
 function dataAnalyze(data) {
     fillChampionWithData(data);
+    fillChampionItemWithData(data);
 };
 
 module.exports = dataAnalyze;
 
 function fillChampionWithData(data) {
-    async.eachSeries(data.participants,
+    async.each(data.participants,
         function addOrEditChampion(participant, callback) {
             Champion.findOne({
                     championId: participant.championId
@@ -31,11 +35,11 @@ function fillChampionWithData(data) {
                             champion = createOrFilledChampion(null,
                                 participant,
                                 data.teams);
-                        else 
+                        else
                             champion = createOrFilledChampion(champion,
-                                                              participant,
-                                                              data.teams);
-                        champion.save(function(err){
+                                participant,
+                                data.teams);
+                        champion.save(function (err) {
                             console.log(champion);
                             if (err) console.error(err);
                         });
@@ -170,7 +174,7 @@ function createOrFilledChampion(ch, p, teams) {
     ch.cumulatedInhibitorKills += p.stats.inhibitorKills;
     if (ch.maxInhibitorKills < p.stats.inhibitorKills)
         ch.maxInhibitorKills = p.stats.inhibitorKills;
-    
+
     return ch;
 }
 
@@ -193,8 +197,58 @@ function getBans(teams) {
 }
 
 function fillChampionItemWithData(data) {
-
+    async.each(data.participants,
+        function (participant, callback) {
+            async.each(itemFields,
+                function (item, callback) {
+                    addOrEditChampionItem(data, participant, item, callback);
+                },
+                function (err) {
+                    if (err) console.error(err);
+                });
+        },
+        function (err) {
+            if (err) console.error(err);
+        });
 }
+
+function addOrEditChampionItem(data, participant, itemField, callback) {
+    ChampionItem.findOne({
+            championId: participant.championId,
+            itemId: participant.stats[itemField]
+        },
+        function useResult(err, championItem) {
+            if (err) console.error(err);
+            else {
+                if (championItem == undefined)
+                    championItem = createOrFilledChampionItem(null,
+                        participant.championId,
+                        participant.stats[itemField]);
+                else
+                    championItem = createOrFilledChampionItem(championItem,
+                        participant.championId,
+                        participant.stats[itemField]);
+                championItem.save(function (err) {
+                    console.log(championItem);
+                    if (err) console.error(err);
+                });
+            }
+            callback()
+        });
+}
+
+function createOrFilledChampionItem(ci, championId, itemId){
+    if (ci == null){
+        ci = new ChampionItem();
+        ci.championId = championId;
+        ci.itemId = itemId;
+    }
+    
+    ci.value++;
+    
+    return ci;
+}
+    
 
 function fillChampionLaneWithData(data) {
 
