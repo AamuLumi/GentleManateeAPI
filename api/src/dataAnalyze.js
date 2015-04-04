@@ -23,6 +23,7 @@ function dataAnalyze(data) {
     fillChampionPlayerRankWithData(data);
     fillChampionRoleWithData(data);
     fillChampionSpellWithData(data);
+    fillMatchWithData(data);
 };
 
 module.exports = dataAnalyze;
@@ -464,7 +465,6 @@ function addOrEditChampionSpell(data, participant, spellField, callback) {
                         participant.championId,
                         participant[spellField]);
                 championSpell.save(function (err) {
-                    console.log(championSpell);
                     if (err) console.error(err);
                 });
             }
@@ -485,7 +485,38 @@ function createOrFilledChampionSpell(cs, championId, spellId) {
 }
 
 function fillMatchWithData(data) {
+    Match.findOne({
+            entryId: Match.DefaultId
+        },
+        function useResult(err, match) {
+            if (err) console.error(err);
+            else {
+                if (match == undefined)
+                    match = createOrFilledMatch(null,
+                        data);
+                else
+                    match = createOrFilledMatch(match,
+                        data);
+                match.save(function (err) {
+                    console.log(match);
+                    if (err) console.error(err);
+                });
+            }
+        });
+}
 
+function createOrFilledMatch(match, data) {
+    if (match == null) {
+        match = new Match();
+    }
+
+    match.cumulatedDuration += data.matchDuration;
+    if (match.maxDuration < data.matchDuration) match.maxDuration = data.matchDuration;
+    if (match.minDuration > data.matchDuration) match.minDuration = data.matchDuration;
+
+    match.played++;
+
+    return match;
 }
 
 function fillTeamWithData(data) {
