@@ -18,6 +18,7 @@ var itemFields = ["item0", "item1", "item2", "item3", "item4", "item5", "item6"]
 function dataAnalyze(data) {
     fillChampionWithData(data);
     fillChampionItemWithData(data);
+    fillChampionLaneWithData(data);
 };
 
 module.exports = dataAnalyze;
@@ -40,7 +41,6 @@ function fillChampionWithData(data) {
                                 participant,
                                 data.teams);
                         champion.save(function (err) {
-                            console.log(champion);
                             if (err) console.error(err);
                         });
                     }
@@ -49,7 +49,6 @@ function fillChampionWithData(data) {
         },
         function (err) {
             if (err) console.error(err);
-            console.error("finished");
         });
 }
 
@@ -229,7 +228,6 @@ function addOrEditChampionItem(data, participant, itemField, callback) {
                         participant.championId,
                         participant.stats[itemField]);
                 championItem.save(function (err) {
-                    console.log(championItem);
                     if (err) console.error(err);
                 });
             }
@@ -237,21 +235,72 @@ function addOrEditChampionItem(data, participant, itemField, callback) {
         });
 }
 
-function createOrFilledChampionItem(ci, championId, itemId){
-    if (ci == null){
+function createOrFilledChampionItem(ci, championId, itemId) {
+    if (ci == null) {
         ci = new ChampionItem();
         ci.championId = championId;
         ci.itemId = itemId;
     }
-    
+
     ci.value++;
-    
+
     return ci;
 }
-    
+
 
 function fillChampionLaneWithData(data) {
+    async.each(data.participants,
+        function (participant, callback) {
+            ChampionLane.findOne({
+                    championId: participant.championId,
+                    laneId: getLaneIdForString(participant.timeline.lane)
+                },
+                function useResult(err, championLane) {
+                    if (err) console.error(err);
+                    else {
+                        if (championLane == undefined)
+                            championLane = createOrFilledChampionLane(null,
+                                participant.championId,
+                                getLaneIdForString(participant.timeline.lane));
+                        else
+                            championLane = createOrFilledChampionLane(championLane,
+                                participant.championId,
+                                getLaneIdForString(participant.timeline.lane));
+                        championLane.save(function (err) {
+                            console.log(championLane);
+                            if (err) console.error(err);
+                        });
+                    }
+                    callback()
+                });;
+        },
+        function (err) {
+            if (err) console.error(err);
+        });
+}
 
+function createOrFilledChampionLane(cl, championId, laneId) {
+    if (cl == null) {
+        cl = new ChampionLane();
+        cl.championId = championId;
+        cl.laneId = laneId;
+    }
+
+    cl.value++;
+
+    return cl;
+}
+
+function getLaneIdForString(lane) {
+    console.log(lane);
+    if ((lane == "MID") || (lane == "MIDDLE"))
+        return ChampionLane.Mid;
+    else if ((lane == "BOT") || (lane == "BOTTOM"))
+        return ChampionLane.Bot;
+    else if (lane == "TOP")
+        return ChampionLane.Top;
+    else
+        return ChampionLane.Jungle;
 }
 
 function fillChampionPlayerRankWithData(data) {
