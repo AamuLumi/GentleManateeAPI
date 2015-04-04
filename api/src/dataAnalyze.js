@@ -20,6 +20,7 @@ function dataAnalyze(data) {
     fillChampionItemWithData(data);
     fillChampionLaneWithData(data);
     fillChampionPlayerRankWithData(data);
+    fillChampionRoleWithData(data);
 };
 
 module.exports = dataAnalyze;
@@ -372,7 +373,60 @@ function getPlayerRankIdForString(pr) {
 }
 
 function fillChampionRoleWithData(data) {
+    async.each(data.participants,
+        function (participant, callback) {
+            ChampionRole.findOne({
+                    championId: participant.championId,
+                    roleId: getRoleIdForString(participant.timeline.role)
+                },
+                function useResult(err, championRole) {
+                    if (err) console.error(err);
+                    else {
+                        if (championRole == undefined)
+                            championRole = createOrFilledChampionRole(null,
+                                participant.championId,
+                                getRoleIdForString(participant.timeline.role));
+                        else
+                            championRole = createOrFilledChampionRole(championRole,
+                                participant.championId,
+                                getRoleIdForString(participant.timeline.role));
+                        championRole.save(function (err) {
+                            if (err) console.error(err);
+                        });
+                    }
+                    callback()
+                });;
+        },
+        function (err) {
+            if (err) console.error(err);
+        });
+}
 
+function createOrFilledChampionRole(cr, championId, roleId) {
+    if (cr == null) {
+        cr = new ChampionRole();
+        cr.championId = championId;
+        cr.roleId = roleId;
+    }
+
+    cr.value++;
+
+    return cr;
+}
+
+function getRoleIdForString(role) {
+    if (role == "NONE")
+        return ChampionRole.None;
+    else if (role == "SOLO")
+        return ChampionRole.Solo;
+    else if (role == "DUO")
+        return ChampionRole.Duo;
+    else if (role == "DUO_CARRY")
+        return ChampionRole.DuoCarry;
+    else if (role == "DUO_SUPPORT")
+        return ChampionRole.DuoSupport;
+    else 
+        return undefined;
 }
 
 function fillChampionSpellWithData(data) {
