@@ -8,8 +8,7 @@ var ChampionLaneSchema = new Schema({
 });
 
 module.exports = mongoose.model('ChampionLane', ChampionLaneSchema);
-module.exports.Lane = {};
-module.exports.Lane.Mid = 1;
-module.exports.Lane.Top = 2;
-module.exports.Lane.Bot = 3;
-module.exports.Lane.Jungle = 4;
+module.exports.Mid = 1;
+module.exports.Top = 2;
+module.exports.Bot = 3;
+module.exports.Jungle = 4;
