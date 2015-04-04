@@ -5,6 +5,7 @@ var ChampionSchema = new Schema({
     championId : Number,
     
     played : {type : Number, default : 0},
+    wins : {type : Number, default : 0},
     
     cumulatedKills : {type : Number, default : 0},
     maxKills : {type : Number, default : 0},
