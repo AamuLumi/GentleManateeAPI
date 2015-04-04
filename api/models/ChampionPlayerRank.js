@@ -8,12 +8,11 @@ var ChampionPlayerRankSchema = new Schema({
 });
 
 module.exports = mongoose.model('ChampionPlayerRank', ChampionPlayerRankSchema);
-module.exports.PlayerRank = {};
-module.exports.PlayerRank.Unranked = 0;
-module.exports.PlayerRank.Bronze = 1;
-module.exports.PlayerRank.Silver = 2;
-module.exports.PlayerRank.Gold = 3;
-module.exports.PlayerRank.Platinum = 4;
-module.exports.PlayerRank.Diamond = 5;
-module.exports.PlayerRank.Master = 6;
-module.exports.PlayerRank.Challenger = 7;
+module.exports.Unranked = 0;
+module.exports.Bronze = 1;
+module.exports.Silver = 2;
+module.exports.Gold = 3;
+module.exports.Platinum = 4;
+module.exports.Diamond = 5;
+module.exports.Master = 6;
+module.exports.Challenger = 7;
