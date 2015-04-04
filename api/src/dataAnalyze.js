@@ -24,6 +24,7 @@ function dataAnalyze(data) {
     fillChampionRoleWithData(data);
     fillChampionSpellWithData(data);
     fillMatchWithData(data);
+    fillTeamWithData(data);
 };
 
 module.exports = dataAnalyze;
@@ -520,5 +521,47 @@ function createOrFilledMatch(match, data) {
 }
 
 function fillTeamWithData(data) {
+    async.each(data.teams,
+        function addOrEditTeam(team, callback) {
+            Team.findOne({
+                    teamId: team.teamId
+                },
+                function useResult(err, t) {
+                    if (err) console.error(err);
+                    else {
+                        if (t == undefined)
+                            t = createOrFilledTeam(null, team);
+                        else
+                            t = createOrFilledTeam(t, team);
+                        t.save(function (err) {
+                            console.log(t);
+                            if (err) console.error(err);
+                        });
+                    }
+                    callback()
+                });;
+        },
+        function (err) {
+            if (err) console.error(err);
+        });
+}
 
+function createOrFilledTeam(t, team) {
+    if (t == null) {
+        t = new Team();
+        t.teamId = team.teamId;
+    }
+
+    if (team.winner) t.wins++;
+
+    t.cumulatedBaronKills += team.baronKills;
+    if (team.winner && team.firstBaron) t.winWithFirstBaron++;
+    t.cumulatedDragonKills += team.dragonKills;
+    if (team.winner && team.firstDragon) t.winWithFirstDragon++;
+    t.cumulatedInhibitorKills += team.inhibitorKills;
+    if (team.winner && team.firstInhibitor) t.winWithFirstInhibitor++;
+    t.cumulatedTowerKills += team.towerKills;
+    if (team.winner && team.firstTower) t.winWithFirstTower++;
+    
+    return t;
 }
