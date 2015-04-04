@@ -17,20 +17,38 @@ var itemFields = ["item0", "item1", "item2", "item3", "item4", "item5", "item6"]
 var spellFields = ["spell1Id", "spell2Id"];
 
 function dataAnalyze(data) {
-    fillChampionWithData(data);
-    fillChampionItemWithData(data);
-    fillChampionLaneWithData(data);
-    fillChampionPlayerRankWithData(data);
-    fillChampionRoleWithData(data);
-    fillChampionSpellWithData(data);
-    fillMatchWithData(data);
-    fillTeamWithData(data);
+    var eachFunction;
+    
+    if (isCommonChampion(data))
+        eachFunction = async.eachSeries;
+    else
+        eachFunction = async.each;
+    
+    fillChampionWithData(data, eachFunction);
+    fillChampionItemWithData(data, eachFunction);
+    fillChampionLaneWithData(data, eachFunction);
+    fillChampionPlayerRankWithData(data, eachFunction);
+    fillChampionRoleWithData(data, eachFunction);
+    fillChampionSpellWithData(data, eachFunction);
+    fillMatchWithData(data, eachFunction);
+    fillTeamWithData(data, eachFunction);
 };
 
 module.exports = dataAnalyze;
 
-function fillChampionWithData(data) {
-    async.each(data.participants,
+function isCommonChampion(data){
+    for (var i = 0; i < data.participants.length; i++){
+        for (var j = data.participants.length - 1; j > i; j--){
+            if (data.participants[i].championId == data.participants[j].championId)
+                return true;
+        }
+    }
+    
+    return false;
+}
+
+function fillChampionWithData(data, eachFunction) {
+    eachFunction(data.participants,
         function addOrEditChampion(participant, callback) {
             Champion.findOne({
                     championId: participant.championId
@@ -61,6 +79,7 @@ function fillChampionWithData(data) {
 function createOrFilledChampion(ch, p, teams) {
     if (ch == null) {
         ch = new Champion();
+        console.log("New : " + p.championId);
         ch.championId = p.championId;
     }
 
@@ -201,10 +220,10 @@ function getBans(teams) {
     return res;
 }
 
-function fillChampionItemWithData(data) {
-    async.each(data.participants,
+function fillChampionItemWithData(data, eachFunction) {
+    eachFunction(data.participants,
         function (participant, callback) {
-            async.each(itemFields,
+            eachFunction(itemFields,
                 function (item, callback) {
                     addOrEditChampionItem(data, participant, item, callback);
                 },
@@ -254,8 +273,8 @@ function createOrFilledChampionItem(ci, championId, itemId) {
 }
 
 
-function fillChampionLaneWithData(data) {
-    async.each(data.participants,
+function fillChampionLaneWithData(data, eachFunction) {
+    eachFunction(data.participants,
         function (participant, callback) {
             ChampionLane.findOne({
                     championId: participant.championId,
@@ -309,8 +328,8 @@ function getLaneIdForString(lane) {
         return undefined;
 }
 
-function fillChampionPlayerRankWithData(data) {
-    async.each(data.participants,
+function fillChampionPlayerRankWithData(data, eachFunction) {
+    eachFunction(data.participants,
         function (participant, callback) {
             ChampionPlayerRank.findOne({
                     championId: participant.championId,
@@ -376,8 +395,8 @@ function getPlayerRankIdForString(pr) {
         return undefined;
 }
 
-function fillChampionRoleWithData(data) {
-    async.each(data.participants,
+function fillChampionRoleWithData(data, eachFunction) {
+    eachFunction(data.participants,
         function (participant, callback) {
             ChampionRole.findOne({
                     championId: participant.championId,
@@ -433,10 +452,10 @@ function getRoleIdForString(role) {
         return undefined;
 }
 
-function fillChampionSpellWithData(data) {
-    async.each(data.participants,
+function fillChampionSpellWithData(data, eachFunction) {
+    eachFunction(data.participants,
         function (participant, callback) {
-            async.each(spellFields,
+            eachFunction(spellFields,
                 function (spell, callback) {
                     addOrEditChampionSpell(data, participant, spell, callback);
                 },
@@ -485,7 +504,7 @@ function createOrFilledChampionSpell(cs, championId, spellId) {
     return cs;
 }
 
-function fillMatchWithData(data) {
+function fillMatchWithData(data, eachFunction) {
     Match.findOne({
             entryId: Match.DefaultId
         },
@@ -499,7 +518,6 @@ function fillMatchWithData(data) {
                     match = createOrFilledMatch(match,
                         data);
                 match.save(function (err) {
-                    console.log(match);
                     if (err) console.error(err);
                 });
             }
@@ -520,8 +538,8 @@ function createOrFilledMatch(match, data) {
     return match;
 }
 
-function fillTeamWithData(data) {
-    async.each(data.teams,
+function fillTeamWithData(data, eachFunction) {
+    eachFunction(data.teams,
         function addOrEditTeam(team, callback) {
             Team.findOne({
                     teamId: team.teamId
@@ -534,7 +552,6 @@ function fillTeamWithData(data) {
                         else
                             t = createOrFilledTeam(t, team);
                         t.save(function (err) {
-                            console.log(t);
                             if (err) console.error(err);
                         });
                     }
