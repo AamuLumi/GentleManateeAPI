@@ -41,8 +41,8 @@ var ChampionSchema = new Schema({
     
     cumulatedGoldEarned : {type : Number, default : 0},
     maxGoldEarned : {type : Number, default : 0},
-    cumulatedGoldSpend : {type : Number, default : 0},
-    maxGoldSpend : {type : Number, default : 0},
+    cumulatedGoldSpent : {type : Number, default : 0},
+    maxGoldSpent : {type : Number, default : 0},
     
     maxCriticalStrike : {type : Number, default : 0},
     cumulatedMaxCriticalStrike : {type : Number, default : 0},
