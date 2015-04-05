@@ -18,12 +18,12 @@ var spellFields = ["spell1Id", "spell2Id"];
 
 function dataAnalyze(data) {
     var eachFunction;
-    
+
     if (isCommonChampion(data))
         eachFunction = async.eachSeries;
     else
         eachFunction = async.each;
-    
+
     fillChampionWithData(data, eachFunction);
     fillChampionItemWithData(data, eachFunction);
     fillChampionLaneWithData(data, eachFunction);
@@ -36,14 +36,14 @@ function dataAnalyze(data) {
 
 module.exports = dataAnalyze;
 
-function isCommonChampion(data){
-    for (var i = 0; i < data.participants.length; i++){
-        for (var j = data.participants.length - 1; j > i; j--){
+function isCommonChampion(data) {
+    for (var i = 0; i < data.participants.length; i++) {
+        for (var j = data.participants.length - 1; j > i; j--) {
             if (data.participants[i].championId == data.participants[j].championId)
                 return true;
         }
     }
-    
+
     return false;
 }
 
@@ -73,13 +73,70 @@ function fillChampionWithData(data, eachFunction) {
         },
         function (err) {
             if (err) console.error(err);
+            var bans = getBans(data.teams);
+            for (var indexBan = 0; indexBan < bans.length; indexBan++)
+                addBan(bans[indexBan], indexBan);
         });
+}
+
+function addBan(bannedChampionId, turn) {
+    Champion.findOne({
+            championId: bannedChampionId
+        },
+        function useResult(err, champion) {
+            if (err) console.error(err);
+            else {
+                if (champion == undefined)
+                    champion = createOrFilledBannedChampion(null,
+                        bannedChampionId, turn);
+                else
+                    champion = createOrFilledBannedChampion(champion,
+                        bannedChampionId, turn);
+                champion.save(function (err) {
+                    if (err) console.error(err);
+                });
+            }
+        });
+}
+
+function createOrFilledBannedChampion(ch, championId, turn) {
+    if (ch == null) {
+        ch = new Champion();
+        ch.championId = championId;
+    }
+
+    switch (turn) {
+    case 0:
+        ch.banAtFirstTurn++;
+        break;
+
+    case 1:
+        ch.banAtSecondTurn++;
+        break;
+
+    case 2:
+        ch.banAtThirdTurn++;
+        break;
+
+    case 3:
+        ch.banAtFourthTurn++;
+        break;
+
+    case 4:
+        ch.banAtFifthTurn++;
+        break;
+
+    case 5:
+        ch.banAtSixthTurn++;
+        break;
+    }
+
+    return ch;
 }
 
 function createOrFilledChampion(ch, p, teams) {
     if (ch == null) {
         ch = new Champion();
-        console.log("New : " + p.championId);
         ch.championId = p.championId;
     }
 
@@ -213,8 +270,8 @@ function getBans(teams) {
     var res = [];
 
     for (var i = 0; i < teams[0].bans.length; i++) {
-        res[teams[0].bans[i].pickTurn] = teams[0].bans[i].championId;
-        res[teams[1].bans[i].pickTurn] = teams[1].bans[i].championId;
+        res[teams[0].bans[i].pickTurn - 1] = teams[0].bans[i].championId;
+        res[teams[1].bans[i].pickTurn - 1] = teams[1].bans[i].championId;
     }
 
     return res;
@@ -579,6 +636,6 @@ function createOrFilledTeam(t, team) {
     if (team.winner && team.firstInhibitor) t.winWithFirstInhibitor++;
     t.cumulatedTowerKills += team.towerKills;
     if (team.winner && team.firstTower) t.winWithFirstTower++;
-    
+
     return t;
 }
