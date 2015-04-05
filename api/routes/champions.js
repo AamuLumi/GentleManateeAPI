@@ -1,4 +1,4 @@
-var Champion = require('../models/champion');
+var Champion = require('../models/Champion');
 var Response = require('../src/response');
 
 var express = require('express');
