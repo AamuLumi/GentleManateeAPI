@@ -269,12 +269,14 @@ function getWinTeamId(teams) {
 function getBans(teams) {
     var res = [];
 
-    for (var i = 0; i < teams[0].bans.length; i++) {
-        res[teams[0].bans[i].pickTurn - 1] = teams[0].bans[i].championId;
-    }
-    for (var i = 0; i < teams[1].bans.length; i++) {
-        res[teams[1].bans[i].pickTurn - 1] = teams[1].bans[i].championId;
-    }
+    if (teams[0].bans != undefined)
+        for (var i = 0; i < teams[0].bans.length; i++) {
+            res[teams[0].bans[i].pickTurn - 1] = teams[0].bans[i].championId;
+        }
+    if (teams[1].bans != undefined)
+        for (var i = 0; i < teams[1].bans.length; i++) {
+            res[teams[1].bans[i].pickTurn - 1] = teams[1].bans[i].championId;
+        }
 
     return res;
 }
