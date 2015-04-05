@@ -270,8 +270,10 @@ function getBans(teams) {
     var res = [];
 
     for (var i = 0; i < teams[0].bans.length; i++) {
-        res[teams[0].bans[i].pickTurn - 1] = teams[0].bans[i].championId;
-        res[teams[1].bans[i].pickTurn - 1] = teams[1].bans[i].championId;
+        if (teams[0].bans[i] != undefined)
+            res[teams[0].bans[i].pickTurn - 1] = teams[0].bans[i].championId;
+        if (teams[1].bans[i] != undefined)
+            res[teams[1].bans[i].pickTurn - 1] = teams[1].bans[i].championId;
     }
 
     return res;
