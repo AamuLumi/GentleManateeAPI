@@ -16,6 +16,13 @@ app.use(function(req, res, next)
 });
 
 app.use(require('./routes/champions'));
+app.use(require('./routes/championLanes'));
+app.use(require('./routes/championRoles'));
+app.use(require('./routes/championItems'));
+app.use(require('./routes/championSpells'));
+app.use(require('./routes/championPlayerRanks'));
+app.use(require('./routes/matchs'));
+app.use(require('./routes/teams'));
 
 app.use(router);
 
