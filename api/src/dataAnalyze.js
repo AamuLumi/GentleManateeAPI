@@ -242,9 +242,9 @@ function createOrFilledChampion(ch, p, teams) {
     ch.cumulatedTotalHeal += p.stats.totalHeal;
     if (ch.maxTotalHeal < p.stats.totalHeal)
         ch.maxTotalHeal = p.stats.totalHeal;
-    ch.cumulatedTimeCrowdControleDealt += p.stats.totalTimeCrowdControlDealt;
-    if (ch.maxTimeCrowdControleDealt < p.stats.totalTimeCrowdControlDealt)
-        ch.maxTimeCrowdControleDealt = p.stats.totalTimeCrowdControlDealt;
+    ch.cumulatedTimeCrowdControlDealt += p.stats.totalTimeCrowdControlDealt;
+    if (ch.maxTimeCrowdControlDealt < p.stats.totalTimeCrowdControlDealt)
+        ch.maxTimeCrowdControlDealt = p.stats.totalTimeCrowdControlDealt;
     ch.cumulatedUnitsHealed += p.stats.totalUnitsHealed;
     if (ch.maxUnitsHealed < p.stats.totalUnitsHealed)
         ch.maxUnitsHealed = p.stats.totalUnitsHealed;
