@@ -1,6 +1,6 @@
-var PlayerCheck = require('./playerCheck');
+var dataAnalyze = require('./dataAnalyze');
 
 var fs = require('fs');
-var data = JSON.parse(fs.readFileSync('data.json', 'utf8'));
+var data = JSON.parse(fs.readFileSync('../data2.json', 'utf8'));
 
-console.log(PlayerCheck.getBestKiller(data));
+dataAnalyze(data);

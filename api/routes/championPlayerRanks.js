@@ -33,7 +33,7 @@ var express = require('express');
 
 var router = express.Router();
 
-router.route('/championPlayerRanks').get(getChampionPlayerRanks);
+router.route('/api/championPlayerRanks').get(getChampionPlayerRanks);
 
 module.exports = router;
 

@@ -30,7 +30,7 @@ var express = require('express');
 
 var router = express.Router();
 
-router.route('/championRoles').get(getChampionRoles);
+router.route('/api/championRoles').get(getChampionRoles);
 
 module.exports = router;
 

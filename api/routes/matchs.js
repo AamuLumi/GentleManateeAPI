@@ -28,7 +28,7 @@ var express = require('express');
 
 var router = express.Router();
 
-router.route('/matchs').get(getMatchs);
+router.route('/api/matchs').get(getMatchs);
 
 module.exports = router;
 

@@ -29,7 +29,7 @@ var express = require('express');
 
 var router = express.Router();
 
-router.route('/championLanes').get(getChampionLanes);
+router.route('/api/championLanes').get(getChampionLanes);
 
 module.exports = router;
 

@@ -111,7 +111,7 @@ var express = require('express');
 
 var router = express.Router();
 
-router.route('/champions').get(getChampions);
+router.route('/api/champions').get(getChampions);
 
 module.exports = router;
 

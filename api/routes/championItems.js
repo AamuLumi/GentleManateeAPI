@@ -21,7 +21,7 @@ var express = require('express');
 
 var router = express.Router();
 
-router.route('/championItems').get(getChampionItems);
+router.route('/api/championItems').get(getChampionItems);
 
 module.exports = router;
 
