@@ -24,6 +24,9 @@ app.use(require('./routes/championPlayerRanks'));
 app.use(require('./routes/matchs'));
 app.use(require('./routes/teams'));
 
+// Add doc
+app.use("/", express.static("./doc/"));
+
 app.use(router);
 
 app.listen(25002);
