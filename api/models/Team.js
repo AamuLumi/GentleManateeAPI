@@ -18,6 +18,3 @@ var TeamSchema = new Schema({
 });
 
 module.exports = mongoose.model('Team', TeamSchema);
-module.exports.Team = {};
-module.exports.Team.Blue = 0;
-module.exports.Team.Red = 1;
