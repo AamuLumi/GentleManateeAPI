@@ -1,3 +1,3 @@
-## Patatoid API Documentation  
+## GentleManatee API Documentation  
 
-Repository : [https://github.com/AamuLumi/Patatoid](https://github.com/AamuLumi/Patatoid)  
+Repository : [https://github.com/AamuLumi/GentleManateeAPI](https://github.com/AamuLumi/GentleManateeAPI)  
