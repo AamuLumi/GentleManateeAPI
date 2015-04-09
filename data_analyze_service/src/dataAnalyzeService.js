@@ -3,7 +3,7 @@ var fs = require('fs');
 var async = require('async');
 var dataAnalyze = require('../../api/src/dataAnalyze');
 
-var datasDirPath = __dirname + '/datas';
+var datasDirPath = __dirname + '/../../data_hook_service/src/datas';
 
 var apiKey = JSON.parse(fs.readFileSync('apiKey.json', 'utf8')).apiKey;
 
