@@ -1,15 +1,18 @@
 {
-    "name" : "Patatoid",
-    "version" : "0.1.0",
-    "description" : "A funny patatoid",
+    "name" : "GentleManateeAPI",
+    "version" : "1.0.0",
+    "description" : "The Gentle Manatee API",
     "author" : "Florian Kauder <flokauder@hotmail.com>",
+    "main" : "./api/api.js",
+    "private" : true,
     "scripts" : {
         "test" : "mocha"
     },
     "dependencies" : {
         "express" : "^4.12.2",
         "mongoose" : "^4.0.0",
-        "gith" : "^1.0.4"
+        "gith" : "^1.0.4",
+        "async" : "^0.9.0"
     },
     "devDependencies" : {
         "mocha" : "^2.2.1",
