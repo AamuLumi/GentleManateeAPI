@@ -3,10 +3,10 @@
  * <table>
  * <tr><td><b>Name</b></td><td><b>Type</b></td><td><b>Default Value</b></td><td><b>Description</b></td></tr>
  * <tr><td>entryId</td><td>Number</td><td>1</td><td>[NOT USED] Id of matchs database</td></tr>
- * <tr><td>cumulatedDuration</td><td>Number</td><td>0</td><td>Cumulated duration of analyzed matchs</td></tr>
- * <tr><td>maxDuration</td><td>Number</td><td>0</td><td>Max duration of analyzed matchs</td></tr>
- * <tr><td>minDuration</td><td>Number</td><td>6000000</td><td>Min duration of analyzed matchs</td></tr>
- * <tr><td>played</td><td>Number</td><td>0</td><td>Number of analyzed matchs</td></tr>
+ * <tr><td>cumulatedDuration</td><td>Number</td><td><center>0</center></td><td>Cumulated duration of analyzed matchs</td></tr>
+ * <tr><td>maxDuration</td><td>Number</td><td><center>0</center></td><td>Max duration of analyzed matchs</td></tr>
+ * <tr><td>minDuration</td><td>Number</td><td><center>6000000</center></td><td>Min duration of analyzed matchs</td></tr>
+ * <tr><td>played</td><td>Number</td><td><center>0</center></td><td>Number of analyzed matchs</td></tr>
  * </table><br>
  * <h2>Routing Table</h2>
  * <table>

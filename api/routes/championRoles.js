@@ -4,7 +4,7 @@
  * <tr><td><b>Name</b></td><td><b>Type</b></td><td><b>Default Value</b></td><td><b>Description</b></td></tr>
  * <tr><td>championId</td><td>Number</td><td></td><td>Id of Champion</td></tr>
  * <tr><td>roleId</td><td>Number</td><td></td><td>Id of Role</td></tr>
- * <tr><td>value</td><td>Number</td><td>0</td><td>Champion was played <i>x</i> times at this role</td></tr>
+ * <tr><td>value</td><td>Number</td><td><center>0</center></td><td>Champion was played <i>x</i> times at this role</td></tr>
  * </table><br>
  * <h2>Routing Table</h2>
  * <table>
@@ -13,11 +13,11 @@
  * <h2>Constants</h2>
  * <table>
  * <tr><td><b>Name</b></td><td><b>Value</b></td></tr>
- * <tr><td>Duo</td><td>1</td></tr>
- * <tr><td>None</td><td>2</td></tr>
- * <tr><td>Solo</td><td>3</td></tr>
- * <tr><td>DuoCarry</td><td>4</td></tr>
- * <tr><td>DuoSupport</td><td>5</td></tr>
+ * <tr><td>Duo</td><td><center>1</center></td></tr>
+ * <tr><td>None</td><td><center>2</center></td></tr>
+ * <tr><td>Solo</td><td><center>3</center></td></tr>
+ * <tr><td>DuoCarry</td><td><center>4</center></td></tr>
+ * <tr><td>DuoSupport</td><td><center>5</center></td></tr>
  * </table><br>
  * @namespace ChampionRoles
  * @author Florian "Aamu Lumi" Kauder

@@ -4,7 +4,7 @@
  * <tr><td><b>Name</b></td><td><b>Type</b></td><td><b>Default Value</b></td><td><b>Description</b></td></tr>
  * <tr><td>championId</td><td>Number</td><td></td><td>Id of Champion</td></tr>
  * <tr><td>spellId</td><td>Number</td><td></td><td>Id of Spell</td></tr>
- * <tr><td>value</td><td>Number</td><td>0</td><td>Spell used <i>x</i> times by this champion</td></tr>
+ * <tr><td>value</td><td>Number</td><td><center>0</center></td><td>Spell used <i>x</i> times by this champion</td></tr>
  * </table><br>
  * <h2>Routing Table</h2>
  * <table>

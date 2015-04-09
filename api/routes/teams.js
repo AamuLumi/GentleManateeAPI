@@ -4,17 +4,17 @@
  * <tr><td><b>Name</b></td><td><b>Type</b></td><td><b>Default Value</b></td><td><b>Description</b></td></tr>
  * <tr><td>teamId</td><td>Number</td><td></td><td>Id of Team (100 or 200)</td></td>
     
- * <tr><td>wins</td><td>Number</td><td>0</td><td>Team won <i>x</i> times</td></td>
+ * <tr><td>wins</td><td>Number</td><td><center>0</center></td><td>Team won <i>x</i> times</td></td>
     
- * <tr><td>cumulatedBaronKills</td><td>Number</td><td>0</td><td>Cumulated barons killed by the team</td></td>
- * <tr><td>cumulatedDragonKills</td><td>Number</td><td>0</td><td>Cumulated dragons killed by the team</td></td>
- * <tr><td>cumulatedInhibitorKills</td><td>Number</td><td>0</td><td>Cumulated inhibitors killed by the team</td></td>
- * <tr><td>cumulatedTowerKills</td><td>Number</td><td>0</td><td>Cumulated towers killed by the team</td></td>
+ * <tr><td>cumulatedBaronKills</td><td>Number</td><td><center>0</center></td><td>Cumulated barons killed by the team</td></td>
+ * <tr><td>cumulatedDragonKills</td><td>Number</td><td><center>0</center></td><td>Cumulated dragons killed by the team</td></td>
+ * <tr><td>cumulatedInhibitorKills</td><td>Number</td><td><center>0</center></td><td>Cumulated inhibitors killed by the team</td></td>
+ * <tr><td>cumulatedTowerKills</td><td>Number</td><td><center>0</center></td><td>Cumulated towers killed by the team</td></td>
     
- * <tr><td>winWithFirstBaron</td><td>Number</td><td>0</td><td>Team won <i>x</i> times with the first baron killed</td></td>
- * <tr><td>winWithFirstDragon</td><td>Number</td><td>0</td><td>Team won <i>x</i> times with the first dragon killed</td></td>
- * <tr><td>winWithFirstInhibitor</td><td>Number</td><td>0</td><td>Team won <i>x</i> times with the first inhibitor killed</td></td>
- * <tr><td>winWithFirstTower</td><td>Number</td><td>0</td><td>Team won <i>x</i> times with the first tower killed</td></td>
+ * <tr><td>winWithFirstBaron</td><td>Number</td><td><center>0</center></td><td>Team won <i>x</i> times with the first baron killed</td></td>
+ * <tr><td>winWithFirstDragon</td><td>Number</td><td><center>0</center></td><td>Team won <i>x</i> times with the first dragon killed</td></td>
+ * <tr><td>winWithFirstInhibitor</td><td>Number</td><td><center>0</center></td><td>Team won <i>x</i> times with the first inhibitor killed</td></td>
+ * <tr><td>winWithFirstTower</td><td>Number</td><td><center>0</center></td><td>Team won <i>x</i> times with the first tower killed</td></td>
  * </table><br>
  * <h2>Routing Table</h2>
  * <table>
