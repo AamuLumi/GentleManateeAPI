@@ -8,7 +8,7 @@
  * </table><br>
  * <h2>Routing Table</h2>
  * <table>
- * <tr><td>GET /championRoles</td><td>{@link ChampionRoles.getChampionRoles}</td></tr>
+ * <tr><td>GET /gentleManateeApi/championRoles</td><td>{@link ChampionRoles.getChampionRoles}</td></tr>
  * </table><br>
  * <h2>Constants</h2>
  * <table>

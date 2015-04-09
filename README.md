@@ -1,4 +1,4 @@
-# Gentle Manatee  
+# Gentle Manatee API
 
 API for Gentle Manatee website.  
-Documentation available at [aamulumi.info/api](aamulumi.info/api).
+Documentation available at [aamulumi.info/gentleManateeApi](aamulumi.info/gentleManateeApi).

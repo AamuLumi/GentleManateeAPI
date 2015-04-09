@@ -18,7 +18,7 @@
  * </table><br>
  * <h2>Routing Table</h2>
  * <table>
- * <tr><td>GET /teams</td><td>{@link Teams.getTeams}</td></tr>
+ * <tr><td>GET /gentleManateeApi/teams</td><td>{@link Teams.getTeams}</td></tr>
  * </table><br>
  * @namespace Teams
  * @author Florian "Aamu Lumi" Kauder
@@ -31,7 +31,7 @@ var express = require('express');
 
 var router = express.Router();
 
-router.route('/api/teams').get(getTeams);
+router.route('/gentleManateeApi/teams').get(getTeams);
 
 module.exports = router;
 
