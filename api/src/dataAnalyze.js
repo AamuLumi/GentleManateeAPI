@@ -304,7 +304,7 @@ function addOrEditChampionItem(data, participant, itemField, callback) {
         },
         function useResult(err, championItem) {
             if (err) console.error(err);
-            else {
+            else if (participant.stats[itemField] != 0){
                 if (championItem == undefined)
                     championItem = createOrFilledChampionItem(null,
                         participant.championId,
