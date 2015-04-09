@@ -3,7 +3,7 @@ var app         = express();
 var router      = express.Router();
 
 var mongoose   = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/patatoid');
+mongoose.connect('mongodb://localhost:27017/gentleManatee');
 
 app.use(function(req, res, next)
 {

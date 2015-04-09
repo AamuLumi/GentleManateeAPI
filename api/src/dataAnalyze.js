@@ -2,7 +2,7 @@ var async = require('async');
 var calls = [];
 
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/patatoid');
+mongoose.connect('mongodb://localhost:27017/gentleManatee');
 
 var Champion = require('../models/Champion');
 var ChampionItem = require('../models/ChampionItem');
