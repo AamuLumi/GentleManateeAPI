@@ -3,7 +3,7 @@ var fs = require('fs');
 var async = require('async');
 var dataAnalyze = require('../../api/src/dataAnalyze');
 
-var datasDirPath = '/../../data_hook_service/src/datas';
+var datasDirPath = '../../data_hook_service/src/datas';
 
 var apiKey = JSON.parse(fs.readFileSync('../../apiKey.json', 'utf8')).apiKey;
 
@@ -30,7 +30,6 @@ function getAndAnalyzeMatch(id, callback) {
             if ("status" in data) {
                 console.error(data.status.message);
             } else {
-                //console.log(data);
                 console.log("[DAS] Get match : " + id);
                 console.log("[DAS] Launch analyze for this match");
                 dataAnalyze(data);
