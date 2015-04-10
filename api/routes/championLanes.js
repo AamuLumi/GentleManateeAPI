@@ -8,7 +8,7 @@
  * </table><br>
  * <h2>Routing Table</h2>
  * <table>
- * <tr><td>GET /gentleManateeApi/championLanes</td><td>{@link ChampionLanes.getChampionLanes}</td></tr>
+ * <tr><td>GET /championLanes</td><td>{@link ChampionLanes.getChampionLanes}</td></tr>
  * </table><br>
  * <h2>Constants</h2>
  * <table>
@@ -29,7 +29,7 @@ var express = require('express');
 
 var router = express.Router();
 
-router.route('/gentleManateeApi/championLanes').get(getChampionLanes);
+router.route('/championLanes').get(getChampionLanes);
 
 module.exports = router;
 

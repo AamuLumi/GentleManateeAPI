@@ -10,7 +10,7 @@
  * </table><br>
  * <h2>Routing Table</h2>
  * <table>
- * <tr><td>GET /gentleManateeApi/matchs</td><td>{@link Matchs.getMatchs}</td></tr>
+ * <tr><td>GET /matchs</td><td>{@link Matchs.getMatchs}</td></tr>
  * </table><br>
  * <h2>Constants</h2>
  * <table>
@@ -28,7 +28,7 @@ var express = require('express');
 
 var router = express.Router();
 
-router.route('/gentleManateeApi/matchs').get(getMatchs);
+router.route('/matchs').get(getMatchs);
 
 module.exports = router;
 

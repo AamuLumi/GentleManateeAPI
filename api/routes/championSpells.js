@@ -8,7 +8,7 @@
  * </table><br>
  * <h2>Routing Table</h2>
  * <table>
- * <tr><td>GET /gentleManateeApi/championSpells</td><td>{@link ChampionSpells.getChampionSpells}</td></tr>
+ * <tr><td>GET /championSpells</td><td>{@link ChampionSpells.getChampionSpells}</td></tr>
  * </table><br>
  * @namespace ChampionSpells
  * @author Florian "Aamu Lumi" Kauder
@@ -21,7 +21,7 @@ var express = require('express');
 
 var router = express.Router();
 
-router.route('/gentleManateeApi/championSpells').get(getChampionSpells);
+router.route('/championSpells').get(getChampionSpells);
 
 module.exports = router;
 
