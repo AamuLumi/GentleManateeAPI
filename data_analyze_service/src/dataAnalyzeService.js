@@ -3,9 +3,9 @@ var fs = require('fs');
 var async = require('async');
 var dataAnalyze = require('../../api/src/dataAnalyze');
 
-var datasDirPath = __dirname + '/../../data_hook_service/src/datas';
+var datasDirPath = '/../../data_hook_service/src/datas';
 
-var apiKey = JSON.parse(fs.readFileSync('apiKey.json', 'utf8')).apiKey;
+var apiKey = JSON.parse(fs.readFileSync('../../apiKey.json', 'utf8')).apiKey;
 
 function getAndAnalyzeMatch(id, callback) {
     console.log("[DAS] Trying to get : " + id);
@@ -60,6 +60,12 @@ function readAFile() {
 function readAndAnalyzeFile(filename, superCallback) {
     var matchs = JSON.parse(fs.readFileSync(datasDirPath + "/" + filename, 'utf8'));
     var i = 0;
+    
+    if (matchs.length == 0){
+        fs.renameSync(datasDirPath + "/" + filename, datasDirPath + "/../oldDatas/" + filename);
+        superCallback();
+        return;
+    }
 
     function next() {
         var callback = getAndAnalyzeMatch;
