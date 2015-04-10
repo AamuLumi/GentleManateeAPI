@@ -12,7 +12,8 @@
         "express" : "^4.12.2",
         "mongoose" : "^4.0.0",
         "gith" : "^1.0.4",
-        "async" : "^0.9.0"
+        "async" : "^0.9.0",
+        "serve-favicon" : "^2.2.0"
     },
     "devDependencies" : {
         "mocha" : "^2.2.1",

@@ -5,6 +5,8 @@ var router      = express.Router();
 var mongoose   = require('mongoose');
 mongoose.connect('mongodb://localhost:27017/gentleManatee');
 
+var favicon = require('serve-favicon');
+
 app.use(function(req, res, next)
 {
     res.header("Cache-Control", "no-cache");
@@ -25,9 +27,9 @@ app.use(require('./routes/matchs'));
 app.use(require('./routes/teams'));
 
 // Add doc
-app.use("/", express.static("./doc/out/"));
+app.use("/", express.static(__dirname + "/doc/out/"));
 
-app.use(favicon("./styles/favicon.ico"));
+app.use(favicon(__dirname + "/styles/favicon.ico"));
 
 app.use(router);
 
