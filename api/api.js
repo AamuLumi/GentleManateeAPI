@@ -27,6 +27,8 @@ app.use(require('./routes/teams'));
 // Add doc
 app.use("/", express.static("./doc/out/"));
 
+app.use(favicon("./styles/favicon.ico"));
+
 app.use(router);
 
 app.listen(25002);
