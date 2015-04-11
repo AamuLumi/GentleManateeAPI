@@ -69,7 +69,51 @@
 
 
     <section class="readme-section">
-        <article><h2>GentleManatee API Documentation</h2><p>Repository : <a href="https://github.com/AamuLumi/GentleManateeAPI">https://github.com/AamuLumi/GentleManateeAPI</a>  </p></article>
+        <article><h1>GentleManatee API Documentation</h1><p>Website : <a href="https://gentlemanatee.info">https://gentlemanatee.info</a><br>Repository : <a href="https://github.com/AamuLumi/GentleManateeAPI">https://github.com/AamuLumi/GentleManateeAPI</a>  </p>
+<h2>Call the API</h2><p>These routes are available :  </p>
+<ul>
+<li><a href="http://api.gentlemanatee.info/ChampionItems.html">/ChampionItems</a> : Get items used by champions  </li>
+<li><a href="http://api.gentlemanatee.info/ChampionLanes.html">/ChampionLanes</a> : Get lanes where champions are played  </li>
+<li><a href="http://api.gentlemanatee.info/ChampionPlayerRanks.html">/ChampionPlayerRanks</a> : Get playerRank of players who played champions  </li>
+<li><a href="http://api.gentlemanatee.info/ChampionRoles.html">/ChampionRoles</a> : Get roles champions played  </li>
+<li><a href="http://api.gentlemanatee.info/Champions.html">/Champions</a> : Get stats on champions</li>
+<li><a href="http://api.gentlemanatee.info/ChampionSpells.html">/ChampionSpells</a> : Get summoners spells used by champions  </li>
+<li><a href="http://api.gentlemanatee.info/Matchs.html">/Matchs</a> : Get general stats on analyzed matchs  </li>
+<li><a href="http://api.gentlemanatee.info/Teams.html">/Teams</a> : Get general stats on blue team and red team  </li>
+</ul>
+<h2>Installation</h2><p>You need <a href="https://nodejs.org/">NodeJS</a> and <a href="https://www.mongodb.org/">MongoDB</a> to run the API.<br>After these installations, go to <em>PROJECT_ROOT</em> folder, and run this command :  </p>
+<blockquote>
+<p>npm install  </p>
+</blockquote>
+<h3>API</h3><p>In the <em>PROJECT_ROOT/api</em> folder, run : </p>
+<blockquote>
+<p>node ./api.js  </p>
+</blockquote>
+<p>After this step, your API server is listening on <a href="http://localhost:25010">http://localhost:25010</a>. </p>
+<h3>Datas Hook and Analyze Service</h3><p>These services need an <a href="https://developer.riotgames.com/">Riot Games API key</a> to work.<br>When you get your key, create the file <em>PROJECT_ROOT/apiKey.json</em> and fill it with the next lines (and replace &quot;xxx&quot; with your key) :  </p>
+<blockquote>
+<p>{
+   &quot;apiKey&quot; : &quot;xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx&quot;
+}</p>
+</blockquote>
+<h4>DataHookService</h4><p>This program get every 5 minutes the games' bucket. It save the bucket in a JSON file in <em>PROJECT_ROOT/data_hook_service/src/datas</em> folder.<br>It works with the <a href="https://developer.riotgames.com/api/methods#!/980">Riot Games api-challenge-v4.1</a>.</p>
+<h4>DataAnalyzeService</h4><p>This program scan all files in the <em>PROJECT_ROOT/data_hook_service/src/datas</em> folder, send a request for each game and use the result to fill the database.<br>It sends a request every 2 seconds.<br>After a scan, files are moved to <em>PROJECT_ROOT/data_hook_service/src/oldDatas</em> folder.<br>It works with the <a href="https://developer.riotgames.com/api/methods#!/967">Riot Games match-v2.2</a>.</p>
+<h2>Extend the Analysis</h2><p>All datas analysis are performed in <em>PROJECT_ROOT</em>/api/src/dataAnalyze.js* file.  </p>
+<h4>Check if game is a mirror's match</h4><p>Normally, datas are treated in parallel mode. But if there's a champion played in blue team and red team, fill database with parallel mode will create false datas cause by concurrent access of a champion.<br>To avoid this, there's the <em>isCommonChampion(data)</em> function which check this case, and we use parallel mode if this function return <em>false</em>, or series mode if this function return <em>true</em>.  </p>
+<h4>Fill each collection with new data</h4><p>There's at least two functions per collection to fill. For example, to fill the Champions collection :
+1- fillChampionWithData(data, eachFunction)
+2- createOrFilledChampion(champion, data_participant, teams)
+The first function is the base function which check for each champion if the champion exists, and get it if true.<br>Second function will just create or fill a Champion object with given datas.  </p>
+<h2>Documentation</h2><p>This documentation is generated with <a href="https://github.com/jsdoc3/jsdoc">JSDoc</a> and <a href="https://github.com/terryweiss/docstrap">DocStrap</a>.<br>To re-generate a new documentation, go to <em>PROJECT_ROOT</em> folder, and install these packages :</p>
+<blockquote>
+<p>npm install jsdoc</p>
+<p>npm install ink-docstrap  </p>
+</blockquote>
+<p>Now, go to <em>PROJECT_ROOT/api/doc</em> folder, and run this commande : </p>
+<blockquote>
+<p>jsdoc ../routes -c ./config.json -d ./out -t ../../node_modules/ink-docstrap/template -r ./README.md 7</p>
+<p>cp ./site.yeti.css ./out/styles/</p>
+</blockquote></article>
     </section>
 
 
@@ -103,7 +147,7 @@
 
 <span class="jsdoc-message">
 	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-beta3</a>
-	on 2015-04-10T03:01:39+02:00 using the <a
+	on 2015-04-11T17:13:59+02:00 using the <a
 	href="https://github.com/terryweiss/docstrap">DocStrap template</a>.
 </span>
 </footer>
