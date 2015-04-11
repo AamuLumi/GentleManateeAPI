@@ -1,7 +1,7 @@
 # Gentle Manatee API
 
 API for Gentle Manatee website.  
-COmplete documentation available at [http://api.gentlemanatee.info](http://api.gentlemanatee.info).
+Complete documentation available at [http://api.gentlemanatee.info](http://api.gentlemanatee.info).
 
 ## Call the API
 
