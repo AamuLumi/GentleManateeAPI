@@ -4,7 +4,7 @@
  * <tr><td><b>Name</b></td><td><b>Type</b></td><td><b>Default Value</b></td><td><b>Description</b></td></tr>
  * <tr><td>championId</td><td>Number</td><td></td><td>Id of Champion</td></tr>
  * <tr><td>itemId</td><td>Number</td><td></td><td>Id of Item</td></tr>
- * <tr><td>value</td><td>Number</td><td><center>0</center></td><td>Item used <i>x</i> times</td></tr>
+ * <tr><td>value</td><td>Number</td><td><center>0</center></td><td>Item bought <i>x</i> times</td></tr>
  * </table><br>
  * <h2>Routing Table</h2>
  * <table>
