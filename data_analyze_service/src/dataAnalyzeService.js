@@ -8,7 +8,7 @@ var datasDirPath = '../../data_hook_service/src/datas';
 var apiKey = JSON.parse(fs.readFileSync('../../apiKey.json', 'utf8')).apiKey;
 
 function getAndAnalyzeMatch(id, callback) {
-    console.log("[DAS] Trying to get : " + id);
+    console.log("[DAS] " + Date.now() + " - Trying to get : " + id);
     if (apiKey == undefined) {
         console.error("Error : No API Key found");
         return;
@@ -30,9 +30,9 @@ function getAndAnalyzeMatch(id, callback) {
             if ("status" in data) {
                 console.error(data.status.message);
             } else {
-                console.log("[DAS] Get match : " + id);
-                console.log("[DAS] Launch analyze for this match");
+                console.log("[DAS] " + Date.now() + " - Get match : " + id + " and start analyze");
                 dataAnalyze(data);
+                console.log("[DAS] " + Date.now() + " - Analyze launched !\n");
             }
             callback();
         });
@@ -50,7 +50,7 @@ function readAFile() {
             i++;
         }
         else
-            console.log("Analyze of existing files terminated");
+            console.log("[DAS] !! Analyze of existing files terminated");
     }
     
     nextFile();

@@ -1,5 +1,6 @@
 var async = require('async');
-var calls = [];
+
+var fs = require('fs');
 
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost:27017/gentleManatee');
@@ -54,7 +55,10 @@ function fillChampionWithData(data, eachFunction) {
                     championId: participant.championId
                 },
                 function useResult(err, champion) {
-                    if (err) console.error(err);
+                    if (err) {
+                        console.error(err);
+                        callback();
+                    }
                     else {
                         if (champion == undefined)
                             champion = createOrFilledChampion(null,
@@ -66,9 +70,9 @@ function fillChampionWithData(data, eachFunction) {
                                 data.teams);
                         champion.save(function (err) {
                             if (err) console.error(err);
+                            callback();
                         });
                     }
-                    callback()
                 });;
         },
         function (err) {
@@ -283,13 +287,14 @@ function getBans(teams) {
 
 function fillChampionItemWithData(data, eachFunction) {
     eachFunction(data.participants,
-        function (participant, callback) {
-            eachFunction(itemFields,
+        function (participant, superCallback) {
+            async.eachSeries(itemFields,
                 function (item, callback) {
                     addOrEditChampionItem(data, participant, item, callback);
                 },
                 function (err) {
                     if (err) console.error(err);
+                    superCallback();
                 });
         },
         function (err) {
@@ -303,8 +308,11 @@ function addOrEditChampionItem(data, participant, itemField, callback) {
             itemId: participant.stats[itemField]
         },
         function useResult(err, championItem) {
-            if (err) console.error(err);
-            else if (participant.stats[itemField] != 0){
+            if (err) {
+                console.error(err);
+                callback();
+            }
+            else if (participant.stats[itemField] != 0) {
                 if (championItem == undefined)
                     championItem = createOrFilledChampionItem(null,
                         participant.championId,
@@ -315,9 +323,11 @@ function addOrEditChampionItem(data, participant, itemField, callback) {
                         participant.stats[itemField]);
                 championItem.save(function (err) {
                     if (err) console.error(err);
+                    callback();
                 });
             }
-            callback()
+            else
+                callback();
         });
 }
 
@@ -337,26 +347,30 @@ function createOrFilledChampionItem(ci, championId, itemId) {
 function fillChampionLaneWithData(data, eachFunction) {
     eachFunction(data.participants,
         function (participant, callback) {
+            var participantWon = (participant.teamId == getWinTeamId(data.teams));
             ChampionLane.findOne({
                     championId: participant.championId,
-                    laneId: getLaneIdForString(participant.timeline.lane)
+                    laneId: getLaneIdForString(participant.timeline.lane, participantWon)
                 },
                 function useResult(err, championLane) {
-                    if (err) console.error(err);
+                    if (err) {
+                        console.error(err);
+                        callback();
+                    }
                     else {
                         if (championLane == undefined)
                             championLane = createOrFilledChampionLane(null,
                                 participant.championId,
-                                getLaneIdForString(participant.timeline.lane));
+                                getLaneIdForString(participant.timeline.lane, participantWon));
                         else
                             championLane = createOrFilledChampionLane(championLane,
                                 participant.championId,
-                                getLaneIdForString(participant.timeline.lane));
+                                getLaneIdForString(participant.timeline.lane, participantWon));
                         championLane.save(function (err) {
                             if (err) console.error(err);
+                            callback();
                         });
                     }
-                    callback()
                 });;
         },
         function (err) {
@@ -376,15 +390,15 @@ function createOrFilledChampionLane(cl, championId, laneId) {
     return cl;
 }
 
-function getLaneIdForString(lane) {
+function getLaneIdForString(lane, gameWon) {
     if ((lane == "MID") || (lane == "MIDDLE"))
-        return ChampionLane.Mid;
+        return gameWon ? ChampionLane.WonMid : ChampionLane.Mid;
     else if ((lane == "BOT") || (lane == "BOTTOM"))
-        return ChampionLane.Bot;
+        return gameWon ? ChampionLane.WonBot : ChampionLane.Bot;
     else if (lane == "TOP")
-        return ChampionLane.Top;
+        return gameWon ? ChampionLane.WonTop : ChampionLane.Top;
     else if (lane == "JUNGLE")
-        return ChampionLane.Jungle;
+        return gameWon ? ChampionLane.WonJungle : ChampionLane.Jungle;
     else
         return undefined;
 }
@@ -398,7 +412,10 @@ function fillChampionPlayerRankWithData(data, eachFunction) {
                         participant.highestAchievedSeasonTier)
                 },
                 function useResult(err, championPlayerRank) {
-                    if (err) console.error(err);
+                    if (err) {
+                        console.error(err);
+                        callback();
+                    }
                     else {
                         if (championPlayerRank == undefined)
                             championPlayerRank = createOrFilledChampionPlayerRank(null,
@@ -413,9 +430,9 @@ function fillChampionPlayerRankWithData(data, eachFunction) {
                                     participant.highestAchievedSeasonTier));
                         championPlayerRank.save(function (err) {
                             if (err) console.error(err);
+                            callback();
                         });
                     }
-                    callback()
                 });;
         },
         function (err) {
@@ -464,7 +481,10 @@ function fillChampionRoleWithData(data, eachFunction) {
                     roleId: getRoleIdForString(participant.timeline.role)
                 },
                 function useResult(err, championRole) {
-                    if (err) console.error(err);
+                    if (err) {
+                        console.error(err);
+                        callback();
+                    }
                     else {
                         if (championRole == undefined)
                             championRole = createOrFilledChampionRole(null,
@@ -476,9 +496,9 @@ function fillChampionRoleWithData(data, eachFunction) {
                                 getRoleIdForString(participant.timeline.role));
                         championRole.save(function (err) {
                             if (err) console.error(err);
+                            callback();
                         });
                     }
-                    callback()
                 });;
         },
         function (err) {
@@ -515,13 +535,14 @@ function getRoleIdForString(role) {
 
 function fillChampionSpellWithData(data, eachFunction) {
     eachFunction(data.participants,
-        function (participant, callback) {
+        function (participant, superCallback) {
             eachFunction(spellFields,
                 function (spell, callback) {
                     addOrEditChampionSpell(data, participant, spell, callback);
                 },
                 function (err) {
                     if (err) console.error(err);
+                    superCallback();
                 });
         },
         function (err) {
@@ -535,7 +556,10 @@ function addOrEditChampionSpell(data, participant, spellField, callback) {
             spellId: participant[spellField]
         },
         function useResult(err, championSpell) {
-            if (err) console.error(err);
+            if (err) {
+                console.error(err);
+                callback();
+            }
             else {
                 if (championSpell == undefined)
                     championSpell = createOrFilledChampionSpell(null,
@@ -547,9 +571,9 @@ function addOrEditChampionSpell(data, participant, spellField, callback) {
                         participant[spellField]);
                 championSpell.save(function (err) {
                     if (err) console.error(err);
+                    callback();
                 });
             }
-            callback()
         });
 }
 
@@ -606,7 +630,10 @@ function fillTeamWithData(data, eachFunction) {
                     teamId: team.teamId
                 },
                 function useResult(err, t) {
-                    if (err) console.error(err);
+                    if (err) {
+                        console.error(err);
+                        callback();
+                    }
                     else {
                         if (t == undefined)
                             t = createOrFilledTeam(null, team);
@@ -614,9 +641,9 @@ function fillTeamWithData(data, eachFunction) {
                             t = createOrFilledTeam(t, team);
                         t.save(function (err) {
                             if (err) console.error(err);
+                            callback();
                         });
                     }
-                    callback()
                 });;
         },
         function (err) {

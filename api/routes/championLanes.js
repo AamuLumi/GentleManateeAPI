@@ -17,6 +17,11 @@
  * <tr><td>Top</td><td><center>2</center></td></tr>
  * <tr><td>Bot</td><td><center>3</center></td></tr>
  * <tr><td>Jungle</td><td><center>4</center></td></tr>
+ * <tr><td>WonMid</td><td><center>5</center></td></tr>
+ * <tr><td>WonTop</td><td><center>6</center></td></tr>
+ * <tr><td>WonBot</td><td><center>7</center></td></tr>
+ * <tr><td>WonJungle</td><td><center>8</center></td></tr>
+ * <tr><td>Won</td><td><center>4</center></td></tr>
  * </table><br>
  * @namespace ChampionLanes
  * @author Florian "Aamu Lumi" Kauder
