@@ -7,7 +7,7 @@ var datasDirPath = '../../data_hook_service/src/datas';
 
 var apiKey = JSON.parse(fs.readFileSync('../../apiKey.json', 'utf8')).apiKey;
 
-function getAndAnalyzeMatch(id, callback) {
+function getAndAnalyzeMatch(id, callback) { 
     console.log("[DAS] " + Date.now() + " - Trying to get : " + id);
     if (apiKey == undefined) {
         console.error("Error : No API Key found");
